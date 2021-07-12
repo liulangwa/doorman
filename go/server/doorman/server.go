@@ -156,6 +156,7 @@ type Server struct {
 		wants      *prometheus.Desc
 		subclients *prometheus.Desc
 	}
+	pb.UnimplementedCapacityServer
 }
 
 type updater func(server *Server, retryNumber int) (time.Duration, int)

@@ -10,7 +10,7 @@ import (
 
 	log "github.com/golang/glog"
 	"github.com/pborman/uuid"
-	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/youtube/doorman/go/client/doorman"
 	"github.com/youtube/doorman/go/ratelimiter"
 	"golang.org/x/net/context"
@@ -122,7 +122,7 @@ func main() {
 			}()
 		}
 	}
-	http.Handle("/metrics", prometheus.Handler())
+	http.Handle("/metrics", promhttp.Handler())
 	http.ListenAndServe(fmt.Sprintf(":%v", *port), nil)
 
 }

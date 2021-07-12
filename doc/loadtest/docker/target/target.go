@@ -3,11 +3,12 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/prometheus/client_golang/prometheus"
 	"net"
 	"net/http"
 
 	log "github.com/golang/glog"
-	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 
@@ -32,7 +33,9 @@ func init() {
 }
 
 // server is used to implement helloworld.GreeterServer.
-type server struct{}
+type server struct {
+	pb.UnimplementedGreeterServer
+}
 
 // SayHello implements helloworld.GreeterServer
 func (s *server) SayHello(ctx context.Context, in *pb.HelloRequest) (*pb.HelloReply, error) {
@@ -47,7 +50,7 @@ func main() {
 		log.Exitf("failed to listen: %v", err)
 	}
 
-	http.Handle("/metrics", prometheus.Handler())
+	http.Handle("/metrics", promhttp.Handler())
 	go http.ListenAndServe(fmt.Sprintf(":%v", *debugPort), nil)
 	s := grpc.NewServer()
 	pb.RegisterGreeterServer(s, &server{})

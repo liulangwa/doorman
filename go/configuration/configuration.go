@@ -10,9 +10,9 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/coreos/etcd/client"
 	log "github.com/golang/glog"
 	"github.com/youtube/doorman/go/timeutil"
+	client "go.etcd.io/etcd/client/v2"
 	"golang.org/x/net/context"
 )
 

@@ -20,8 +20,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/coreos/etcd/client"
 	log "github.com/golang/glog"
+	"go.etcd.io/etcd/client/v2"
 	"golang.org/x/net/context"
 )
 
